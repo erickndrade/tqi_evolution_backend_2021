@@ -9,10 +9,12 @@ import java.util.Optional;
 
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Transactional(readOnly=true)
     Optional<Cliente> findByEmail(String email);
 
     Cliente findByNome(String nome);
+
+    Cliente findByUsuarioId(Long id);
 }

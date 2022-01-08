@@ -23,6 +23,21 @@ public class EmprestimoConverter {
         return emprestimoDto;
     }
 
+    public EmprestimoDto fromEmpretimoModelSimple(Emprestimo emprestimo){
+        EmprestimoDto emprestimoDto = new EmprestimoDto();
+        emprestimoDto.setId(emprestimo.getId());
+        emprestimoDto.setValorEmprestimo(emprestimo.getValorEmprestimo());
+        emprestimoDto.setQuantidadeParcelas(emprestimo.getQuantidadeParcelas());
+
+        return emprestimoDto;
+    }
+
+    public List<EmprestimoDto> fromEmprestimoListModelSimple(List<Emprestimo> emprestimos){
+        return emprestimos.stream()
+                .map(this::fromEmpretimoModelSimple)
+                .collect(Collectors.toList());
+    }
+
     public List<EmprestimoDto> fromEmprestimoListModel(List<Emprestimo> emprestimos){
         return emprestimos.stream()
                 .map(this::fromEmprestimoModel)
@@ -33,5 +48,4 @@ public class EmprestimoConverter {
                 .map(this::toEmprestimoModel)
                 .collect(Collectors.toList());
     }
-
 }

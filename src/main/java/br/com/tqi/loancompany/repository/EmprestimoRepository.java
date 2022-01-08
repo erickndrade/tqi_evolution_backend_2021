@@ -4,8 +4,12 @@ import br.com.tqi.loancompany.domain.Emprestimo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface EmprestimoRepository extends JpaRepository<Emprestimo, Integer> {
+import java.util.List;
 
-    Emprestimo findClienteById(Integer id);
+@Repository
+public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
+
+    Emprestimo findClienteById(Long id);
+
+    List<Emprestimo> findByClienteId(Long id);
 }

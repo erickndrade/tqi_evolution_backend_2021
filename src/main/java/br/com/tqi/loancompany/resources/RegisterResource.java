@@ -4,7 +4,7 @@
 //import br.com.tqi.loancompany.repository.ClienteRepository;
 //import br.com.tqi.loancompany.resources.dto.DadosLogin;
 //import br.com.tqi.loancompany.resources.dto.TokenDto;
-//import br.com.tqi.loancompany.services.AuthenticationService;
+//import br.com.tqi.loancompany.security.AuthenticationService;
 //import br.com.tqi.loancompany.services.TokenService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;

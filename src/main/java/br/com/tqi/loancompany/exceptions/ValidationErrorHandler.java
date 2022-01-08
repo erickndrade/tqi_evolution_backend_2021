@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,9 +28,21 @@ public class ValidationErrorHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(ex ->{
             String mensagem = messageSource.getMessage(ex, LocaleContextHolder.getLocale());
-            ValidacaoDto erro = new ValidacaoDto(ex.getField(), mensagem);
+            ValidacaoDto erro = new ValidacaoDto(mensagem);
             validacaoDtos.add(erro);
         });
         return validacaoDtos;
+    }
+
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidLoginException.class)
+    public ValidacaoDto handleInvalidLoginException(InvalidLoginException exception) {
+    return new ValidacaoDto(exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ValidacaoDto handleAccessDeniedException(AccessDeniedException exception) {
+        return new ValidacaoDto(exception.getMessage());
     }
 }

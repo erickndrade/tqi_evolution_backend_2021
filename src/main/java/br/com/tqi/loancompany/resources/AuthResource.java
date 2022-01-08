@@ -1,26 +1,25 @@
 package br.com.tqi.loancompany.resources;
 
-import br.com.tqi.loancompany.domain.Cliente;
-import br.com.tqi.loancompany.resources.dto.ClienteAutenticadoDto;
+import br.com.tqi.loancompany.resources.dto.AutenticacaoDto;
 import br.com.tqi.loancompany.resources.dto.DadosLogin;
-import br.com.tqi.loancompany.services.AuthenticationService;
+import br.com.tqi.loancompany.security.AutenticacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/login")
 public class AuthResource {
 
     @Autowired
-    AuthenticationService authenticationService;
+    private AutenticacaoService autenticacaoService;
 
     @PostMapping
-    public ResponseEntity<ClienteAutenticadoDto> autenticar(@RequestBody DadosLogin dadosLogin, @RequestHeader String Authorization) {
-        Cliente cliente = authenticationService.authenticate(dadosLogin, Authorization);
-        return new ResponseEntity<>(ClienteAutenticadoDto.toDto(cliente, "Bearer"), HttpStatus.ACCEPTED);
+    public ResponseEntity<AutenticacaoDto> autenticar(@RequestBody DadosLogin dadosLogin) {
+        return ResponseEntity.accepted().body(autenticacaoService.doLogin(dadosLogin));
     }
+
 }

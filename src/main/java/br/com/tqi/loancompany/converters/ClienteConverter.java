@@ -1,12 +1,11 @@
 package br.com.tqi.loancompany.converters;
 
 import br.com.tqi.loancompany.domain.Cliente;
+import br.com.tqi.loancompany.domain.Usuario;
 import br.com.tqi.loancompany.repository.ClienteRepository;
 import br.com.tqi.loancompany.resources.dto.ClienteDto;
 import br.com.tqi.loancompany.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +25,9 @@ public class ClienteConverter {
     ClienteService clienteService;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     EmprestimoConverter emprestimoConverter;
 
     public Cliente toClienteModel(ClienteDto novoCliente) {
@@ -36,6 +38,7 @@ public class ClienteConverter {
         cliente.setEmprestimos(emprestimoConverter.toEmprestimoListModel(novoCliente.getEmprestimos()));
         cliente.getEmprestimos().forEach(emprestimo -> emprestimo.setCliente(cliente));
         cliente.setPerfil(novoCliente.getIdPerfil());
+        cliente.setUsuario(toUsuario(novoCliente));
         return cliente;
     }
 
@@ -60,5 +63,7 @@ public class ClienteConverter {
                 .collect(Collectors.toList());
     }
 
-
+    public Usuario toUsuario(ClienteDto novoCliente){
+        return new Usuario(novoCliente.getId(), novoCliente.getEmail(), passwordEncoder.encode(novoCliente.getSenha()), novoCliente.getIdPerfil());
+    }
 }
