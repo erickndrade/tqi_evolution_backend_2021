@@ -4,14 +4,11 @@ import br.com.tqi.loancompany.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -22,7 +19,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String nome;
 
@@ -50,11 +47,15 @@ public class Cliente implements Serializable {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
     public Cliente(){
         setPerfil(Perfil.CLIENTE);
     }
 
-    public Cliente(Integer id, String nome, String email, String senha, String cpf, String rg, BigDecimal renda) {
+    public Cliente(Long id, String nome, String email, String senha, String cpf, String rg, BigDecimal renda) {
         super();
         this.id = id;
         this.nome = nome;
@@ -66,10 +67,13 @@ public class Cliente implements Serializable {
         setPerfil(Perfil.CLIENTE);
     }
 
-//    public <E> Cliente(String email, String senha, ArrayList<E> es) {
-//
-//    }
-//
+    public Cliente(Long id, String email, String password, Perfil perfil) {
+        this.id = id;
+        this.email = email;
+        this.senha = password;
+        this.perfil = perfil;
+
+    }
 
     @Override
     public int hashCode() {

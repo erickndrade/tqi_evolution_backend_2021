@@ -19,7 +19,7 @@ public class Emprestimo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private Double valorEmprestimo;
 
@@ -36,7 +36,7 @@ public class Emprestimo implements Serializable {
     public Emprestimo() {
     }
 
-    public Emprestimo(Integer id, Double valorEmprestimo, Integer quantidadeParcelas, LocalDate primeiraParcela) {
+    public Emprestimo(Long id, Double valorEmprestimo, Integer quantidadeParcelas, LocalDate primeiraParcela) {
         this.id = id;
         this.valorEmprestimo = valorEmprestimo;
         this.quantidadeParcelas = quantidadeParcelas;

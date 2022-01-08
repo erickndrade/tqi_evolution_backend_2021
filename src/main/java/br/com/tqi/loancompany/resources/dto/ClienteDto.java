@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 public class ClienteDto {
 
-    private Integer id;
+    private Long id;
 
     @NotEmpty(message = "Preenchimento Obrigatório")
     @Length(min = 2, max = 120, message = "O nome ser entre 5 e 120 caracteres")
@@ -56,7 +56,7 @@ public class ClienteDto {
 
     }
 
-    public ClienteDto(Integer id, String nome, String email, String senha, String cpf, String rg, BigDecimal renda,
+    public ClienteDto(Long id, String nome, String email, String senha, String cpf, String rg, BigDecimal renda,
                       Perfil idPerfil){
         super();
         this.id = id;

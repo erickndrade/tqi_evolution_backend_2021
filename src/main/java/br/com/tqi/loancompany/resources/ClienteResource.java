@@ -2,10 +2,10 @@ package br.com.tqi.loancompany.resources;
 
 import br.com.tqi.loancompany.converters.ClienteConverter;
 import br.com.tqi.loancompany.domain.Cliente;
-import br.com.tqi.loancompany.resources.dto.ClienteAutenticadoDto;
+import br.com.tqi.loancompany.resources.dto.AutenticacaoDto;
 import br.com.tqi.loancompany.resources.dto.ClienteDto;
-import br.com.tqi.loancompany.resources.dto.RegistroClienteDto;
-import br.com.tqi.loancompany.services.AuthenticationService;
+import br.com.tqi.loancompany.resources.dto.DadosLogin;
+import br.com.tqi.loancompany.security.AutenticacaoService;
 import br.com.tqi.loancompany.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +25,10 @@ public class ClienteResource {
     private ClienteService clienteService;
 
     @Autowired
-    private ClienteConverter clienteConverter;
+    private AutenticacaoService autenticacaoService;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private ClienteConverter clienteConverter;
 
     @GetMapping
     public ResponseEntity<List<ClienteDto>> findAll() {
@@ -36,27 +36,29 @@ public class ClienteResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDto> detalharCliente(@PathVariable Integer id) {
+    public ResponseEntity<ClienteDto> detalharClienteAdmin(@PathVariable Long id) {
         return ResponseEntity.ok(clienteConverter.fromClienteModel(clienteService.findById(id)));
+    }
+    @GetMapping("/me")
+    public ResponseEntity<ClienteDto> detalharClienteUser(@RequestAttribute("id") Long userId) {
+        return ResponseEntity.ok(clienteConverter.fromClienteModel(clienteService.findByUsuario(userId)));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ClienteAutenticadoDto> inserirCliente(@Valid @RequestBody ClienteDto novoCliente, RegistroClienteDto registro){
+    public ResponseEntity<AutenticacaoDto> inserirCliente(@Valid @RequestBody ClienteDto novoCliente){
         Cliente cliente = clienteService.inserirCliente(clienteConverter.toClienteModel(novoCliente));
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(cliente.getId()).toUri();
-         ResponseEntity.created(uri).build();
-        return new ResponseEntity<>(ClienteAutenticadoDto.toDto(cliente, "Bearer"), HttpStatus.CREATED);
+        AutenticacaoDto response = autenticacaoService.doLogin(new DadosLogin(novoCliente.getEmail(), novoCliente.getSenha()));
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCliente(@PathVariable Integer id){
+    public ResponseEntity<Void> deletarCliente(@PathVariable Long id){
         clienteService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteDto> editarCliente(@PathVariable Integer id, @RequestBody ClienteDto clienteDto){
+    public ResponseEntity<ClienteDto> editarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto){
         return ResponseEntity.ok(clienteConverter.fromClienteModel
                 (clienteService.replace(id, clienteConverter.toClienteModel(clienteDto))));
     }

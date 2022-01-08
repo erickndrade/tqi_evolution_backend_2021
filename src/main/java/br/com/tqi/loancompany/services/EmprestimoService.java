@@ -2,10 +2,13 @@ package br.com.tqi.loancompany.services;
 
 import br.com.tqi.loancompany.domain.Cliente;
 import br.com.tqi.loancompany.domain.Emprestimo;
+import br.com.tqi.loancompany.domain.Usuario;
+import br.com.tqi.loancompany.exceptions.AuthorizationException;
 import br.com.tqi.loancompany.exceptions.BusinessException;
 import br.com.tqi.loancompany.exceptions.ObjectNotFoundException;
 import br.com.tqi.loancompany.repository.ClienteRepository;
 import br.com.tqi.loancompany.repository.EmprestimoRepository;
+import br.com.tqi.loancompany.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -42,7 +45,7 @@ public class EmprestimoService {
         return emprestimoRepository.findAll();
     }
 
-    public Emprestimo inserirEmprestimo(Emprestimo emprestimo, Integer clienteId) {
+    public Emprestimo inserirEmprestimo(Emprestimo emprestimo, Long clienteId) {
         Cliente cliente = clienteRepository.getById(clienteId);
         emprestimo.setCliente(cliente);
         validarPrazo(emprestimo);
@@ -50,7 +53,7 @@ public class EmprestimoService {
         return emprestimoRepository.save(emprestimo);
     }
 
-    public Emprestimo findByCliente(Integer id) {
+    public Emprestimo findByCliente(Long id) {
         Emprestimo emprestimo = emprestimoRepository.findClienteById(id);
         if (emprestimo == null) {
             throw new ObjectNotFoundException("Empréstimo não encontrado para o cliente informado!");
@@ -58,15 +61,25 @@ public class EmprestimoService {
         return emprestimo;
     }
 
-    public Emprestimo findById(Integer id) {
+    public Emprestimo findById(Long id) {
         Optional<Emprestimo> emprestimo = emprestimoRepository.findById(id);
         if (emprestimo.isPresent()) {
             return emprestimo.get();
         }
         throw new ObjectNotFoundException("Emprestimo não encontrado!");
     }
+    public Emprestimo findById(Long id, Long userId) {
+        Optional<Emprestimo> emprestimo = emprestimoRepository.findById(id);
+        if (!emprestimo.isPresent()) {
+            throw new ObjectNotFoundException("Emprestimo não encontrado!");
+        }
+        if (!emprestimo.get().getCliente().getUsuario().getId().equals(userId)){
+            throw new AuthorizationException("Acesso Negado!");
+        }
+        return emprestimo.get();
+    }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         findById(id);
         try {
             emprestimoRepository.deleteById(id);
@@ -75,8 +88,19 @@ public class EmprestimoService {
         }
     }
 
-    public Emprestimo replace(Integer id, Emprestimo emprestimo) {
+    public Emprestimo replace(Long id, Emprestimo emprestimo) {
         emprestimo.setId(id);
+        return emprestimoRepository.save(emprestimo);
+    }
+
+    public List<Emprestimo> findByUsuario(Long id) {
+        Cliente cliente = clienteRepository.findByUsuarioId(id);
+        return emprestimoRepository.findByClienteId(cliente.getId());
+    }
+
+    public Emprestimo inserirEmprestimoUser(Long id, Emprestimo emprestimo) {
+        Cliente cliente = clienteRepository.findByUsuarioId(id);
+        emprestimo.setCliente(cliente);
         return emprestimoRepository.save(emprestimo);
     }
 }

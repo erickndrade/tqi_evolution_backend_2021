@@ -10,13 +10,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteAutenticadoDto {
+public class AutenticacaoDto {
 
     private String token;
     private String tipo;
 
-    public static ClienteAutenticadoDto toDto(Cliente cliente, String tipo){
-        return new ClienteAutenticadoDto(cliente.getToken(), tipo);
+    public static AutenticacaoDto toDto(Cliente cliente, String tipo){
+        return new AutenticacaoDto(cliente.getToken(), tipo);
     }
 
 }

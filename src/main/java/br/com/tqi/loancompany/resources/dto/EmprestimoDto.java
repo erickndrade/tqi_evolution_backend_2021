@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 public class EmprestimoDto {
 
-    private Integer id;
+    private Long id;
 
     @NotNull(message = "Preenchimento Obrigatório")
     private Double valorEmprestimo;
@@ -32,7 +32,7 @@ public class EmprestimoDto {
     public EmprestimoDto() {
     }
 
-    public EmprestimoDto(Integer id, Double valorEmprestimo, Integer quantidadeParcelas, LocalDate primeiraParcela) {
+    public EmprestimoDto(Long id, Double valorEmprestimo, Integer quantidadeParcelas, LocalDate primeiraParcela) {
         super();
         this.id = id;
         this.valorEmprestimo = valorEmprestimo;

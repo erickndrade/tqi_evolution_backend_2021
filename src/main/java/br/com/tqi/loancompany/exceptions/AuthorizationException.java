@@ -3,7 +3,7 @@ package br.com.tqi.loancompany.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.FORBIDDEN)
 public class AuthorizationException extends RuntimeException{
 
     public AuthorizationException(){
