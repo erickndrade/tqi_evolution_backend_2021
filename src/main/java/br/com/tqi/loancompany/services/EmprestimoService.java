@@ -2,13 +2,11 @@ package br.com.tqi.loancompany.services;
 
 import br.com.tqi.loancompany.domain.Cliente;
 import br.com.tqi.loancompany.domain.Emprestimo;
-import br.com.tqi.loancompany.domain.Usuario;
 import br.com.tqi.loancompany.exceptions.AuthorizationException;
 import br.com.tqi.loancompany.exceptions.BusinessException;
 import br.com.tqi.loancompany.exceptions.ObjectNotFoundException;
 import br.com.tqi.loancompany.repository.ClienteRepository;
 import br.com.tqi.loancompany.repository.EmprestimoRepository;
-import br.com.tqi.loancompany.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

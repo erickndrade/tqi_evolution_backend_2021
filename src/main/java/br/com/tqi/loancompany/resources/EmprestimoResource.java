@@ -1,10 +1,8 @@
 package br.com.tqi.loancompany.resources;
 
 import br.com.tqi.loancompany.converters.EmprestimoConverter;
-import br.com.tqi.loancompany.domain.Cliente;
 import br.com.tqi.loancompany.domain.Emprestimo;
 import br.com.tqi.loancompany.resources.dto.EmprestimoDto;
-import br.com.tqi.loancompany.services.ClienteService;
 import br.com.tqi.loancompany.services.EmprestimoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

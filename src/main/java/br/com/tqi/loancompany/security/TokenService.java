@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class TokenService {
 
-//    private static final long expirationTime = 86400000;
-
     public static final String AUTHORITIES_CLAIM = "authorities";
 
     public static final String SYSTEM_USER_CLAIM = "usuario";
@@ -52,21 +50,6 @@ public class TokenService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
     }
-
-//    public String gerarToken(Authentication authentication) {
-
-//        Usuario logado = (Usuario) authentication.getPrincipal();
-//
-//        return Jwts.builder()
-//                .setIssuer("API do Fórum da Alura")
-//                .setSubject(logado.getId().toString())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-//                .signWith(SignatureAlgorithm.HS256, secret)
-//                .compact();
-//
-//
-//    }
 
     public boolean isValid(String token) {
         try {
