@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "e7b0b127-4a69-4cd6-a4b8-239f8af52602",
+		"name": "Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastro Cliente",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Erick Augusto\",\n    \"email\": \"eu@hotmail.com\",\n    \"cpf\": \"11251978622\",\n    \"rg\": \"12345678\",\n    \"renda\": 98765.43,\n    \"idPerfil\": 1,\n    \"senha\": \"123456789\",\n    \"enderecos\": [{\n        \"logradouro\": \"Rua Ya Nasso\",\n        \"numero\": \"552\",\n        \"cep\": \"38413150\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/clientes/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastro Emprestimo pelo Cliente",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTE5NiwiaWF0IjoxNjQxNzczMzk2LCJhdXRob3JpdGllcyI6IkNMSUVOVEUifQ.8weCpKpIodCjAOKgSOI-WxOSXPcQIfMbKJ58jkiGyHw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"valorEmprestimo\": 10000.90,\n        \"quantidadeParcelas\": 35,\n        \"primeiraParcela\":\"06-03-2022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/emprestimos/create/me",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"create",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastro Emprestimo pelo Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"valorEmprestimo\": 150000,\n        \"quantidadeParcelas\": 60,\n        \"primeiraParcela\":\"06-03-2022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/emprestimos/admin/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"admin",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"eu@hotmail.com\",\n    \"senha\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de Clientes pelo Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cliente por Id pelo Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/admin/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"admin",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de Emprestimos pelo Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emprestimo por Id pelo Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos/admin/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"admin",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca de cliente pelo Usuário",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3MDk0NCwiaWF0IjoxNjQxNzY5MTQ0LCJhdXRob3JpdGllcyI6IkNMSUVOVEUifQ.31Ojj-7YIo1bDMzHKG90tW55o81kVaA5gy2D7bx2Chk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/me",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca de Emprestimo pelo cliente",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3MDk0NCwiaWF0IjoxNjQxNzY5MTQ0LCJhdXRob3JpdGllcyI6IkNMSUVOVEUifQ.31Ojj-7YIo1bDMzHKG90tW55o81kVaA5gy2D7bx2Chk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos/me",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emprestimo por Id pelo cliente",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3MDk0NCwiaWF0IjoxNjQxNzY5MTQ0LCJhdXRob3JpdGllcyI6IkNMSUVOVEUifQ.31Ojj-7YIo1bDMzHKG90tW55o81kVaA5gy2D7bx2Chk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos/1/me",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"1",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emprestimo pelo Id do cliente",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3MDk0NCwiaWF0IjoxNjQxNzY5MTQ0LCJhdXRob3JpdGllcyI6IkNMSUVOVEUifQ.31Ojj-7YIo1bDMzHKG90tW55o81kVaA5gy2D7bx2Chk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos/clientes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edição do cliente por Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc2MDM5MSwiaWF0IjoxNjQxNzU4NTkxLCJhdXRob3JpdGllcyI6IkFETUlOIn0.2Cc3UX8NaHiimBPmpZXsN88whADqRpuHJZdmh7O_-w0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Erick Andrade\",\n    \"email\": \"me@hotmail.com\",\n    \"cpf\": \"94164363649\",\n    \"rg\": \"12345678\",\n    \"renda\": 98765.43,\n    \"idPerfil\": 1,\n    \"senha\": \"123456789\",\n    \"enderecos\": [{\n        \"logradouro\": \"Rua Ya Nasso\",\n        \"numero\": \"552\",\n        \"cep\": \"38413150\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/clientes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edição do empréstimo por Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"valorEmprestimo\": 15000,\n    \"quantidadeParcelas\": 40,\n    \"primeiraParcela\":\"06-03-2022\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/emprestimos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar emprestimo por Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/emprestimos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emprestimos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar cliente por Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUBob3RtYWlsLmNvbSIsInVzdWFyaW8iOjEsImV4cCI6MTY0MTc3NTQ2NiwiaWF0IjoxNjQxNzczNjY2LCJhdXRob3JpdGllcyI6IkFETUlOIn0._Yg-QzNYwMxUv8Ql24g9G6ZKv5DDzVuzeSMHoNCmQWs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
