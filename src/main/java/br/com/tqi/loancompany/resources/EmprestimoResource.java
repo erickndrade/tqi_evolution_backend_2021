@@ -26,7 +26,7 @@ public class EmprestimoResource {
 
     @GetMapping
     public ResponseEntity<List<EmprestimoDto>> findAll(){
-        return ResponseEntity.ok(emprestimoConverter.fromEmprestimoListModel(emprestimoService.findAll()));
+        return ResponseEntity.ok(emprestimoConverter.fromEmprestimoListModelSimple(emprestimoService.findAll()));
     }
 
     @GetMapping("/me")
@@ -35,7 +35,7 @@ public class EmprestimoResource {
         return ResponseEntity.ok(emprestimoConverter.fromEmprestimoListModelSimple(emprestimoService.findByUsuario(id)));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     public ResponseEntity<EmprestimoDto> detalharEmprestimo(@PathVariable Long id) {
         return ResponseEntity.ok(emprestimoConverter.fromEmprestimoModel(emprestimoService.findById(id)));
     }
@@ -49,11 +49,11 @@ public class EmprestimoResource {
         return ResponseEntity.ok().body(emprestimo);
     }
 
-    @PostMapping("/create/{clienteId}")
+    @PostMapping("/admin/{id}")
     public ResponseEntity<EmprestimoDto> inserirEmprestimoAdmin(@Valid @RequestBody EmprestimoDto novoEmprestimo,
-                                                           @PathVariable Long clienteId, UriComponentsBuilder builder){
+                                                           @PathVariable Long id, UriComponentsBuilder builder){
         Emprestimo emprestimo = emprestimoService.inserirEmprestimo(
-                emprestimoConverter.toEmprestimoModel(novoEmprestimo), clienteId);
+                emprestimoConverter.toEmprestimoModel(novoEmprestimo), id);
         URI uri = builder.path("/create/{clienteId}").buildAndExpand(emprestimo.getCliente().getId()).toUri();
         return ResponseEntity.created(uri).body(emprestimoConverter.fromEmprestimoModel(emprestimo));
     }
@@ -74,7 +74,7 @@ public class EmprestimoResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmprestimoDto> editarEmprestimo(@PathVariable Long id, @RequestBody EmprestimoDto emprestimoDto){
+    public ResponseEntity<EmprestimoDto> editarEmprestimo(@PathVariable @RequestAttribute("id") Long id, @RequestBody EmprestimoDto emprestimoDto){
         return ResponseEntity.ok(emprestimoConverter.fromEmprestimoModel
                 (emprestimoService.replace(id, emprestimoConverter.toEmprestimoModel(emprestimoDto))));
     }

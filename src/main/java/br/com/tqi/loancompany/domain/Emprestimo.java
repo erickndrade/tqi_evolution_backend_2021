@@ -27,9 +27,14 @@ public class Emprestimo implements Serializable {
 
     private LocalDate primeiraParcela;
 
+    private String emailCliente;
+
+//    @ManyToOne
+//    @JoinColumn(name = "usuario_id")
+//    private Usuario usuario;
 //    private Integer clienteId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 

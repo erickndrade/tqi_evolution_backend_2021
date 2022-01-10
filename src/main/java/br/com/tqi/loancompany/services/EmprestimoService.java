@@ -87,7 +87,9 @@ public class EmprestimoService {
     }
 
     public Emprestimo replace(Long id, Emprestimo emprestimo) {
+        Cliente cliente = validateAndGetClienteId(id);
         emprestimo.setId(id);
+        emprestimo.setCliente(cliente);
         return emprestimoRepository.save(emprestimo);
     }
 
@@ -99,6 +101,16 @@ public class EmprestimoService {
     public Emprestimo inserirEmprestimoUser(Long id, Emprestimo emprestimo) {
         Cliente cliente = clienteRepository.findByUsuarioId(id);
         emprestimo.setCliente(cliente);
+        validarPrazo(emprestimo);
+        validarParcela(emprestimo);
         return emprestimoRepository.save(emprestimo);
+    }
+
+    private Cliente validateAndGetClienteId(Long emprestimoId){
+        Optional<Emprestimo> emprestimo = emprestimoRepository.findById(emprestimoId);
+        if (!emprestimo.isPresent()){
+            throw new ObjectNotFoundException("Emprestimo não encontrado!");
+        }
+        return emprestimo.get().getCliente();
     }
 }

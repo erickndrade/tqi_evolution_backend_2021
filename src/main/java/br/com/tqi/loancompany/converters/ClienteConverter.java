@@ -64,6 +64,7 @@ public class ClienteConverter {
     }
 
     public Usuario toUsuario(ClienteDto novoCliente){
-        return new Usuario(novoCliente.getId(), novoCliente.getEmail(), passwordEncoder.encode(novoCliente.getSenha()), novoCliente.getIdPerfil());
+        return new Usuario(novoCliente.getId(), novoCliente.getEmail(), passwordEncoder.encode(novoCliente.getSenha()),
+                novoCliente.getIdPerfil());
     }
 }

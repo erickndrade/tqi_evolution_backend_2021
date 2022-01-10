@@ -3,6 +3,7 @@ package br.com.tqi.loancompany.services;
 import br.com.tqi.loancompany.domain.Cliente;
 import br.com.tqi.loancompany.exceptions.ObjectNotFoundException;
 import br.com.tqi.loancompany.repository.ClienteRepository;
+import br.com.tqi.loancompany.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
@@ -34,15 +38,20 @@ public class ClienteService {
     }
 
     public void deleteById(Long id) {
-        findById(id);
+        Cliente cliente = findById(id);
         try {
-            clienteRepository.deleteById(id);
+            clienteRepository.delete(cliente);
+            usuarioRepository.delete(cliente.getUsuario());
         } catch (DataIntegrityViolationException exception) {
             throw new DataIntegrityViolationException("Não foi possível excluir esse usuário!");
         }
     }
 
     public Cliente replace(Long id, Cliente cliente) {
+        Cliente clienteExistente = clienteRepository.getById(id);
+        cliente.setEmprestimos(clienteExistente.getEmprestimos());
+        cliente.setEnderecos(clienteExistente.getEnderecos());
+        cliente.setUsuario(clienteExistente.getUsuario());
         cliente.setId(id);
         return clienteRepository.save(cliente);
     }

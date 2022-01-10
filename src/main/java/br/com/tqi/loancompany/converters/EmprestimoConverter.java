@@ -11,25 +11,21 @@ import java.util.stream.Collectors;
 public class EmprestimoConverter {
 
     public Emprestimo toEmprestimoModel(EmprestimoDto novoEmprestimo){
+
         return new Emprestimo(novoEmprestimo.getId(), novoEmprestimo.getValorEmprestimo(),
-                novoEmprestimo.getQuantidadeParcelas(), novoEmprestimo.getPrimeiraParcela());
+                 novoEmprestimo.getQuantidadeParcelas(), novoEmprestimo.getPrimeiraParcela());
     }
 
     public EmprestimoDto fromEmprestimoModel(Emprestimo novoEmprestimo){
          EmprestimoDto emprestimoDto = new EmprestimoDto(novoEmprestimo.getId(), novoEmprestimo.getValorEmprestimo(),
                 novoEmprestimo.getQuantidadeParcelas(), novoEmprestimo.getPrimeiraParcela());
-         emprestimoDto.setEmailCliente(novoEmprestimo.getCliente().getEmail());
         emprestimoDto.setRendaCliente(novoEmprestimo.getCliente().getRenda());
+        emprestimoDto.setEmailCliente(novoEmprestimo.getCliente().getEmail());
         return emprestimoDto;
     }
 
     public EmprestimoDto fromEmpretimoModelSimple(Emprestimo emprestimo){
-        EmprestimoDto emprestimoDto = new EmprestimoDto();
-        emprestimoDto.setId(emprestimo.getId());
-        emprestimoDto.setValorEmprestimo(emprestimo.getValorEmprestimo());
-        emprestimoDto.setQuantidadeParcelas(emprestimo.getQuantidadeParcelas());
-
-        return emprestimoDto;
+        return new EmprestimoDto(emprestimo.getId(), emprestimo.getValorEmprestimo(), emprestimo.getQuantidadeParcelas());
     }
 
     public List<EmprestimoDto> fromEmprestimoListModelSimple(List<Emprestimo> emprestimos){

@@ -1,5 +1,6 @@
 package br.com.tqi.loancompany.resources.dto;
 
+import br.com.tqi.loancompany.domain.Cliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,10 +27,18 @@ public class EmprestimoDto {
     private LocalDate primeiraParcela;
 
     private String emailCliente;
+//
+//    private Cliente cliente;
 
     private BigDecimal rendaCliente;
 
     public EmprestimoDto() {
+    }
+
+    public EmprestimoDto(Long id, Double valorEmprestimo, Integer quantidadeParcelas) {
+        setId(id);
+        setValorEmprestimo(valorEmprestimo);
+        setQuantidadeParcelas(quantidadeParcelas);
     }
 
     public EmprestimoDto(Long id, Double valorEmprestimo, Integer quantidadeParcelas, LocalDate primeiraParcela) {

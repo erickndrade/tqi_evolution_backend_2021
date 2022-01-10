@@ -32,7 +32,7 @@ public class ClienteResource {
         return ResponseEntity.ok(clienteConverter.fromClienteListModel(clienteService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     public ResponseEntity<ClienteDto> detalharClienteAdmin(@PathVariable Long id) {
         return ResponseEntity.ok(clienteConverter.fromClienteModel(clienteService.findById(id)));
     }
@@ -55,7 +55,7 @@ public class ClienteResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteDto> editarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto){
+    public ResponseEntity<ClienteDto> editarCliente(@PathVariable @RequestAttribute("id") Long id, @RequestBody ClienteDto clienteDto){
         return ResponseEntity.ok(clienteConverter.fromClienteModel
                 (clienteService.replace(id, clienteConverter.toClienteModel(clienteDto))));
     }

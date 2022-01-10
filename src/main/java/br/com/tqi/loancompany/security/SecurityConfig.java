@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,11 +49,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/**/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/create/{clienteId}").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/emprestimos").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/clientes").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/emprestimos/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/**/admin/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/emprestimos").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/clientes").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/**/admin/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/**/{id}").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/emprestimos/{id}").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
